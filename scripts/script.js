@@ -30,6 +30,15 @@ if (playerNameEl) {
             cell.dataset.row = r;
             cell.dataset.col = c;
             
+            // Plant seed when clicking cell
+            cell.addEventListener('click', () => {
+                if(!cell.textContent){
+                    cell.textContent = "🌱"; // plant seed
+                } else {
+                    cell.textContent = ""; //remove seed
+                }
+            })
+
             gardenGrid.appendChild(cell);
         }
     }
