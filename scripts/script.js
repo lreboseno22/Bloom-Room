@@ -72,39 +72,50 @@ if (playerNameEl) {
         }
     }
 
-// Show / Hide Shop Modal
-const shopBtn = document.getElementById("shopBtn");
-const shopModal = document.getElementById("shopModal");
-const closeShop = document.getElementById("closeShop");
+    // Show / Hide Shop Modal
+    const shopBtn = document.getElementById("shopBtn");
+    const shopModal = document.getElementById("shopModal");
+    const closeShop = document.getElementById("closeShop");
 
-if (shopBtn && shopModal && closeShop) {
-    shopBtn.style.cursor = "pointer";
+    if (shopBtn && shopModal && closeShop) {
+        shopBtn.style.cursor = "pointer";
 
-    // Open
-    shopBtn.addEventListener("click", () => {
-        shopModal.style.display = "block";
-    });
+        // Open
+        shopBtn.addEventListener("click", () => {
+            shopModal.style.display = "block";
+        });
 
-    // Close
-    closeShop.addEventListener("click", () => {
-        shopModal.style.display = "none";
-    });
-
-    // Close when clicking outside shop
-    window.addEventListener("click", (event) => {
-        if (event.target === shopModal) {
+        // Close
+        closeShop.addEventListener("click", () => {
             shopModal.style.display = "none";
-        }
-    });
-}
-}
+        });
 
-const shop = document.getElementById("shop");
-if (shop) {
+        // Close when clicking outside shop
+        window.addEventListener("click", (event) => {
+            if (event.target === shopModal) {
+                shopModal.style.display = "none";
+            }
+        });
+    }
+
+    // Seed catalog
     const seedCatalog = [
         { seed: "carrot", stages: ["🌱", "🥕"] },
         { seed: "tomato", stages: ["🌱", "🌿", "🍅"] },
         { seed: "sunflower", stages: ["🌱", "🌿", "🌻"] }
     ];
+
+    // Dynamically create shop catalog as buttons
+    const catalogEl = document.getElementById("catalog");
+    if (catalogEl) {
+        catalogEl.innerHTML = ""; 
+        seedCatalog.forEach(seed => {
+            const btn = document.createElement("button");
+            btn.classList.add("shop-item");
+            btn.dataset.seed = seed.seed;
+            btn.textContent = `Buy ${seed.seed} ${seed.stages[0]}`;
+            catalogEl.appendChild(btn);
+        });
+    }
 
 }
