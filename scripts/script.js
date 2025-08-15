@@ -48,6 +48,11 @@ if (playerNameEl) {
     const gardenGrid = document.getElementById("gardenGrid");
     const rows = 8;
     const cols = 8;
+    const growthStages = {
+        carrot: ["🌱", "🥕"],
+        tomato: ["🌱", "🌿", "🍅"],
+        sunflower: ["🌱", "🌿", "🌻"]
+    };
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -67,14 +72,31 @@ if (playerNameEl) {
         }
     }
 
-    // Navigate to shop
-    const shopBtn = document.getElementById("shopBtn");
-    if (shopBtn) {
-        shopBtn.style.cursor = "pointer";
-        shopBtn.addEventListener("click", () => {
-            window.location.href = "./shop.html";
-        });
-    }
+// Show / Hide Shop Modal
+const shopBtn = document.getElementById("shopBtn");
+const shopModal = document.getElementById("shopModal");
+const closeShop = document.getElementById("closeShop");
+
+if (shopBtn && shopModal && closeShop) {
+    shopBtn.style.cursor = "pointer";
+
+    // Open
+    shopBtn.addEventListener("click", () => {
+        shopModal.style.display = "block";
+    });
+
+    // Close
+    closeShop.addEventListener("click", () => {
+        shopModal.style.display = "none";
+    });
+
+    // Close when clicking outside shop
+    window.addEventListener("click", (event) => {
+        if (event.target === shopModal) {
+            shopModal.style.display = "none";
+        }
+    });
+}
 }
 
 const shop = document.getElementById("shop");
