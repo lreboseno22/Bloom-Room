@@ -1,12 +1,6 @@
-body {
-    background-color: rgba(175, 223, 224, 0.61);
-}
-
 #navbar {
     display: flex;
     justify-content: space-between;
-    border: 3px solid #4d3a2a;
-    background-color: #6a8e23ac;
     border-radius: 1rem;
 }
 

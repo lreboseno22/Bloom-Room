@@ -18,6 +18,32 @@ if (playerNameEl) {
     const name = localStorage.getItem("playerName");
     playerNameEl.textContent = name || "gardener";
 
+    // Load Inventory
+    const inventoryEl = document.getElementById("seeds")
+    let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+
+    function loadInventory() {
+        if (!inventoryEl) return;
+        inventoryEl.innerHTML = "";
+
+        if (inventory.length === 0) {
+            const li = document.createElement("li");
+            li.textContent = "You don't have any seeds. Go to the shop!";
+            li.style.fontStyle = "italic";
+            li.style.listStyle = "none";
+            inventoryEl.appendChild(li);
+            return;
+        }
+
+        inventory.forEach(seed => {
+            const li = document.createElement("li");
+            li.textContent = seed;
+            inventoryEl.appendChild(li);
+        });
+    }
+
+    loadInventory();
+
     // Dynamically create garden 
     const gardenGrid = document.getElementById("gardenGrid");
     const rows = 8;
@@ -29,18 +55,34 @@ if (playerNameEl) {
             cell.classList.add("cell");
             cell.dataset.row = r;
             cell.dataset.col = c;
-            
+
             // Plant seed when clicking cell
             cell.addEventListener('click', () => {
-                if(!cell.textContent){
-                    cell.textContent = "🌱"; // plant seed
-                } else {
-                    cell.textContent = ""; //remove seed
+                if (!inventory.length) {
+                    alert("You don't own any seeds! Buy some from the shop.");
+                    return;
                 }
             })
             gardenGrid.appendChild(cell);
         }
     }
 
+    // Navigate to shop
+    const shopBtn = document.getElementById("shopBtn");
+    if (shopBtn) {
+        shopBtn.style.cursor = "pointer";
+        shopBtn.addEventListener("click", () => {
+            window.location.href = "./shop.html";
+        });
+    }
 }
 
+const shop = document.getElementById("shop");
+if (shop) {
+    const seedCatalog = [
+        { seed: "carrot", stages: ["🌱", "🥕"] },
+        { seed: "tomato", stages: ["🌱", "🌿", "🍅"] },
+        { seed: "sunflower", stages: ["🌱", "🌿", "🌻"] }
+    ];
+
+}
