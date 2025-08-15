@@ -1,18 +1,54 @@
+body {
+    background-color: rgba(175, 223, 224, 0.61);
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    border: 3px solid #4d3a2a;
+    background-color: #6a8e23ac;
+    border-radius: 1rem;
+}
+
+#shopBtn {
+    margin-left: 3rem;
+}
+
+#greeting {
+    margin-right: 3rem;
+}
+
+main {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#shed {
+    margin-right: 3rem;
+    padding: 5rem;
+    padding-top: 0;
+    border: 5px solid #4d3a2a;
+    background-color: rgb(207, 176, 135);
+    border-radius: 1rem;
+}
+
 #gardenGrid {
     display: grid;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
+    grid-template-columns: repeat(8, 70px);
+    grid-template-rows: repeat(8, 70px);
     gap: 2px;
+    margin-left: 3rem;
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     background-color: #6c4e35;
-    border: 1px solid #6b8e23;
+    border: 3px solid #6b8e23;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 2rem;
 }

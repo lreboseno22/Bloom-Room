@@ -20,8 +20,8 @@ if (playerNameEl) {
 
     // Dynamically create garden 
     const gardenGrid = document.getElementById("gardenGrid");
-    const rows = 10;
-    const cols = 10;
+    const rows = 8;
+    const cols = 8;
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -38,7 +38,6 @@ if (playerNameEl) {
                     cell.textContent = ""; //remove seed
                 }
             })
-
             gardenGrid.appendChild(cell);
         }
     }
