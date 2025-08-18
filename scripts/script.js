@@ -20,6 +20,7 @@ if (playerNameEl) {
 
     // Load Inventory
     const inventoryEl = document.getElementById("seeds")
+    let selectedSeed = null;
     let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
     function loadInventory() {
@@ -42,6 +43,16 @@ if (playerNameEl) {
 
             li.textContent = seed + " ";
             li.style.listStyle = "none";
+
+            // Added plant button
+            const plantBtn = document.createElement("button");
+            plantBtn.textContent = "Plant";
+            plantBtn.style.marginLeft = "10px";
+            plantBtn.addEventListener("click", () => {
+                selectedSeed = seed;
+                alert(`Selected ${seed} to plant! Now click a garden cell.`)
+            })
+            li.appendChild(plantBtn);
 
             // Added remove button
             const removeBtn = document.createElement("button");
@@ -82,7 +93,13 @@ if (playerNameEl) {
                     alert("You don't own any seeds! Buy some from the shop.");
                     return;
                 }
+
+                const stages = growthStages[selectedSeed];
+                cell.textContent = stages[0];
+                cell.dataset.seed = selectedSeed;
+                cell.dataset.stage = 0;
             })
+            selectedSeed = null;
             gardenGrid.appendChild(cell);
         }
     }
