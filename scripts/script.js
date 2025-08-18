@@ -26,6 +26,8 @@ if (playerNameEl) {
         if (!inventoryEl) return;
         inventoryEl.innerHTML = "";
 
+        let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+
         if (inventory.length === 0) {
             const li = document.createElement("li");
             li.textContent = "You don't have any seeds. Go to the shop!";
@@ -35,9 +37,22 @@ if (playerNameEl) {
             return;
         }
 
-        inventory.forEach(seed => {
+        inventory.forEach((seed, index) => {
             const li = document.createElement("li");
-            li.textContent = seed;
+
+            li.textContent = seed + " ";
+            li.style.listStyle = "none";
+
+            // Added remove button
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "Remove";
+            removeBtn.style.marginLeft = "10px";
+            removeBtn.addEventListener("click", () => {
+                inventory.splice(index, 1);
+                localStorage.setItem("inventory", JSON.stringify(inventory));
+                loadInventory();
+            });
+            li.appendChild(removeBtn);
             inventoryEl.appendChild(li);
         });
     }
@@ -114,8 +129,21 @@ if (playerNameEl) {
             btn.classList.add("shop-item");
             btn.dataset.seed = seed.seed;
             btn.textContent = `Buy ${seed.seed} ${seed.stages[0]}`;
+
+            // Clicking on button to add seed to inventory
+            btn.addEventListener("click", () => {
+                let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+                if(!inventory.includes(seed.seed)) {
+                    inventory.push(seed.seed);
+                    localStorage.setItem("inventory", JSON.stringify(inventory));
+                    alert(`${seed.seed} added to your inventory!`);
+                } else {
+                    alert(`You already own ${seed.seed}`);
+                }
+                loadInventory();
+            });
+
             catalogEl.appendChild(btn);
         });
     }
-
 }
