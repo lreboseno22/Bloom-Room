@@ -50,7 +50,7 @@ if (playerNameEl) {
             plantBtn.style.marginLeft = "10px";
             plantBtn.addEventListener("click", () => {
                 selectedSeed = seed;
-                alert(`Selected ${seed} to plant! Now click a garden cell.`)
+                showToast(`Selected ${seed} to plant! Now click a plot.`, "success")
             })
             li.appendChild(plantBtn);
 
@@ -75,19 +75,32 @@ if (playerNameEl) {
     const rows = 8;
     const cols = 8;
     const growthStages = {
-        carrot: {
+        Carrot: {
             stages: ["🌱", "🥕"],
             timePerStage: 3000
         },
-        tomato: {
+        Tomato: {
             stages: ["🌱", "🌿", "🍅"],
             timePerStage: 5000
         },
-        sunflower: {
+        Sunflower: {
             stages: ["🌱", "🌿", "🌻"],
             timePerStage: 8000
         }
     };
+
+    function showToast(message, type = "success") {
+        const notifications = document.getElementById("notifications");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+
+        notifications.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3500);
+    }
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -99,17 +112,17 @@ if (playerNameEl) {
             // Plant seed when clicking cell
             cell.addEventListener('click', () => {
                 if (!inventory.length) {
-                    alert("You don't own any seeds! Buy some from the shop.");
+                    showToast("You don't own any seeds! Buy some from the shop.", "error");
                     return;
                 }
 
                 if (!selectedSeed) {
-                    alert("Please select a seed from your inventory first!");
+                    showToast("Please select a seed from your inventory first!", "error");
                     return;
                 }
 
                 if (cell.dataset.seed) {
-                    alert("This plot already has a plant!");
+                    showToast("This plot already has a plant!", "error");
                     return;
                 }
 
@@ -157,7 +170,7 @@ if (playerNameEl) {
 
         // Close when clicking outside shop
         window.addEventListener("click", (event) => {
-            if (event.target === shopModal) {
+            if (event.target.classList.contains("overlay")) {
                 shopModal.classList.remove("show");
             }
         });
@@ -165,9 +178,9 @@ if (playerNameEl) {
 
     // Seed catalog
     const seedCatalog = [
-        { seed: "carrot", stages: ["🌱", "🥕"] },
-        { seed: "tomato", stages: ["🌱", "🌿", "🍅"] },
-        { seed: "sunflower", stages: ["🌱", "🌿", "🌻"] }
+        { seed: "Carrot", stages: ["🌱", "🥕"] },
+        { seed: "Tomato", stages: ["🌱", "🌿", "🍅"] },
+        { seed: "Sunflower", stages: ["🌱", "🌿", "🌻"] }
     ];
 
     // Dynamically create shop catalog as buttons
@@ -186,9 +199,9 @@ if (playerNameEl) {
                 if (!inventory.includes(seed.seed)) {
                     inventory.push(seed.seed);
                     localStorage.setItem("inventory", JSON.stringify(inventory));
-                    alert(`${seed.seed} added to your inventory!`);
+                    showToast(`${seed.seed} added to your inventory!`, "success");
                 } else {
-                    alert(`You already own ${seed.seed}`);
+                    showToast(`You already own ${seed.seed}`, "error");
                 }
                 loadInventory();
             });
