@@ -13,7 +13,7 @@ if (form) {
 }
 
 // Display Username in Garden
-const playerNameEl = document.getElementById("playerName");
+const playerNameEl = document.querySelector("#playerName");
 if (playerNameEl) {
     const name = localStorage.getItem("playerName");
     playerNameEl.textContent = name || "gardener";
@@ -29,6 +29,7 @@ if (playerNameEl) {
 
         let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
+        // Check if user has seeds
         if (inventory.length === 0) {
             const li = document.createElement("li");
             li.textContent = "You don't have any seeds. Go to the shop!";
@@ -38,6 +39,7 @@ if (playerNameEl) {
             return;
         }
 
+        // Dynamically create list of seeds to plant or remove 
         inventory.forEach((seed, index) => {
             const li = document.createElement("li");
 
@@ -58,6 +60,8 @@ if (playerNameEl) {
             const removeBtn = document.createElement("button");
             removeBtn.textContent = "Remove";
             removeBtn.style.marginLeft = "10px";
+
+            // Remove seed list from inventory
             removeBtn.addEventListener("click", () => {
                 inventory.splice(index, 1);
                 localStorage.setItem("inventory", JSON.stringify(inventory));
@@ -89,6 +93,7 @@ if (playerNameEl) {
         }
     };
 
+    // Replaced alerts with a toast 
     function showToast(message, type = "success") {
         const notifications = document.getElementById("notifications");
         const toast = document.createElement("div");
@@ -102,25 +107,29 @@ if (playerNameEl) {
         }, 3500);
     }
 
+    // Garden plots
+    const fragment = document.createDocumentFragment();
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
             const cell = document.createElement("div");
             cell.classList.add("cell");
-            cell.dataset.row = r;
-            cell.dataset.col = c;
+            fragment.appendChild(cell);
+            // cell.dataset.row = r;
+            // cell.dataset.col = c;
 
             // Plant seed when clicking cell
             cell.addEventListener('click', () => {
+                // If user doesn't have seeds, they can't plant
                 if (!inventory.length) {
                     showToast("You don't own any seeds! Buy some from the shop.", "error");
                     return;
                 }
-
+                // If user hasn't selected a seed to plant they won't be able to plant
                 if (!selectedSeed) {
                     showToast("Please select a seed from your inventory first!", "error");
                     return;
                 }
-
+                // If plot already has a seed planted, user can't plant another seed in that plot
                 if (cell.dataset.seed) {
                     showToast("This plot already has a plant!", "error");
                     return;
@@ -144,10 +153,9 @@ if (playerNameEl) {
                         cell.classList.add("harvestRdy");
                     }
                 }, plant.timePerStage)
-            })
-            selectedSeed = null; // Reset selection
-            gardenGrid.appendChild(cell);
+            })  
         }
+        gardenGrid.appendChild(fragment);
     }
 
     // Show / Hide Shop Modal

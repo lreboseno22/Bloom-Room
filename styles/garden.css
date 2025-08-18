@@ -62,18 +62,35 @@ main {
     cursor: pointer;
 } 
 
+#catalog {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
 #catalog button {
-    margin: 5px 0;
-    padding: 6px 10px;
+    flex: 1 1 150px;
+    max-width: 200px;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem 1rem;
     cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #888;
+    border-radius: 12px;
+    border: none;
     background-color: #fff;
-    transition: background-color 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #catalog button:hover {
-    background-color: #d0f0d0;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#catalog button:active {
+  transform: scale(0.97);
 }
 
 
@@ -103,6 +120,16 @@ main {
 
 .cell.harvestRdy {
     background-color: #ffe6b3; 
+}
+
+#shopModal h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #6c4e35d5; 
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .modal {
