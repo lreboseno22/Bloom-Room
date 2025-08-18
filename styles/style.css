@@ -1,9 +1,15 @@
 html, 
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Verdana', sans-serif;
+  background: linear-gradient(#d4f1c5, #f9f9f9);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 *,
@@ -12,3 +18,42 @@ body {
   box-sizing: border-box;
 }
 
+main {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+h1 {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2e7d32;
+  letter-spacing: 2px;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin: 0.5rem 0 0.2rem;
+  color: #444;
+}
+
+form input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 2px solid #c8e6c9;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+form input:focus {
+  border-color: #66bb6a;
+}
