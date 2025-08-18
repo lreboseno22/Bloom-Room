@@ -75,9 +75,18 @@ if (playerNameEl) {
     const rows = 8;
     const cols = 8;
     const growthStages = {
-        carrot: ["🌱", "🥕"],
-        tomato: ["🌱", "🌿", "🍅"],
-        sunflower: ["🌱", "🌿", "🌻"]
+        carrot: {
+            stages: ["🌱", "🥕"],
+            timePerStage: 3000 
+        },
+        tomato: {
+            stages: ["🌱", "🌿", "🍅"],
+            timePerStage: 5000
+        },
+        sunflower: {
+            stages: ["🌱", "🌿", "🌻"],
+            timePerStage: 8000
+        }
     };
 
     for (let r = 0; r < rows; r++) {
@@ -93,13 +102,26 @@ if (playerNameEl) {
                     alert("You don't own any seeds! Buy some from the shop.");
                     return;
                 }
+                const plant = growthStages[selectedSeed];
+                let stage = 0;
 
-                const stages = growthStages[selectedSeed];
-                cell.textContent = stages[0];
+                cell.textContent = plant.stages[stage];
                 cell.dataset.seed = selectedSeed;
-                cell.dataset.stage = 0;
+                cell.dataset.stage = stage;
+
+                // Growth 
+                const grow = setInterval(() => {
+                    stage++;
+                    if(stage < plant.stages.length){
+                        cell.textContent = plant.stages[stage];
+                        cell.dataset.stage = stage;
+                    } else {
+                        clearInterval(grow);
+                        cell.classList.add("harvestRdy");
+                    }
+                }, plant.timePerStage)
             })
-            selectedSeed = null;
+            selectedSeed = null; // Reset selection
             gardenGrid.appendChild(cell);
         }
     }
