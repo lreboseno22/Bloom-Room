@@ -77,7 +77,7 @@ if (playerNameEl) {
     const growthStages = {
         carrot: {
             stages: ["🌱", "🥕"],
-            timePerStage: 3000 
+            timePerStage: 3000
         },
         tomato: {
             stages: ["🌱", "🌿", "🍅"],
@@ -103,7 +103,12 @@ if (playerNameEl) {
                     return;
                 }
 
-                if(cell.dataset.seed){
+                if (!selectedSeed) {
+                    alert("Please select a seed from your inventory first!");
+                    return;
+                }
+
+                if (cell.dataset.seed) {
                     alert("This plot already has a plant!");
                     return;
                 }
@@ -118,7 +123,7 @@ if (playerNameEl) {
                 // Growth 
                 const grow = setInterval(() => {
                     stage++;
-                    if(stage < plant.stages.length){
+                    if (stage < plant.stages.length) {
                         cell.textContent = plant.stages[stage];
                         cell.dataset.stage = stage;
                     } else {
@@ -142,18 +147,18 @@ if (playerNameEl) {
 
         // Open
         shopBtn.addEventListener("click", () => {
-            shopModal.style.display = "block";
+            shopModal.classList.add("show");
         });
 
         // Close
         closeShop.addEventListener("click", () => {
-            shopModal.style.display = "none";
+            shopModal.classList.remove("show");
         });
 
         // Close when clicking outside shop
         window.addEventListener("click", (event) => {
             if (event.target === shopModal) {
-                shopModal.style.display = "none";
+                shopModal.classList.remove("show");
             }
         });
     }
@@ -168,7 +173,7 @@ if (playerNameEl) {
     // Dynamically create shop catalog as buttons
     const catalogEl = document.getElementById("catalog");
     if (catalogEl) {
-        catalogEl.innerHTML = ""; 
+        catalogEl.innerHTML = "";
         seedCatalog.forEach(seed => {
             const btn = document.createElement("button");
             btn.classList.add("shop-item");
@@ -178,7 +183,7 @@ if (playerNameEl) {
             // Clicking on button to add seed to inventory
             btn.addEventListener("click", () => {
                 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
-                if(!inventory.includes(seed.seed)) {
+                if (!inventory.includes(seed.seed)) {
                     inventory.push(seed.seed);
                     localStorage.setItem("inventory", JSON.stringify(inventory));
                     alert(`${seed.seed} added to your inventory!`);
