@@ -102,6 +102,12 @@ if (playerNameEl) {
                     alert("You don't own any seeds! Buy some from the shop.");
                     return;
                 }
+
+                if(cell.dataset.seed){
+                    alert("This plot already has a plant!");
+                    return;
+                }
+
                 const plant = growthStages[selectedSeed];
                 let stage = 0;
 
