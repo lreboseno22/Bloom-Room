@@ -70,6 +70,11 @@ if (playerNameEl) {
             li.appendChild(removeBtn);
             inventoryEl.appendChild(li);
         });
+
+        // Make first seed bold
+        if (inventoryEl.firstChild) {
+            inventoryEl.firstChild.style.fontWeight = "bold";
+        }
     }
 
     loadInventory();
@@ -114,8 +119,6 @@ if (playerNameEl) {
             const cell = document.createElement("div");
             cell.classList.add("cell");
             fragment.appendChild(cell);
-            // cell.dataset.row = r;
-            // cell.dataset.col = c;
 
             // Plant seed when clicking cell
             cell.addEventListener('click', () => {
@@ -153,7 +156,7 @@ if (playerNameEl) {
                         cell.classList.add("harvestRdy");
                     }
                 }, plant.timePerStage)
-            })  
+            })
         }
         gardenGrid.appendChild(fragment);
     }
